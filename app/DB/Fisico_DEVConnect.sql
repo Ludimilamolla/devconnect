@@ -1,4 +1,4 @@
-/* Lógico_DEVConnect: */
+/* Logico_DEVConnect: */
 
 CREATE TABLE Desenvolvedor (
     ID_dev INTEGER PRIMARY KEY,
