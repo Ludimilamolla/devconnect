@@ -180,7 +180,7 @@ def abrir_interface_candidato():
     criar_perfil_button.pack(padx=15, pady=15)
 
     # Botão - Listar vagas
-    listar_vagas_button = tk.Button(recrutador_window, text="Listar Vagas", command=exibir_lista_vagas)
+    listar_vagas_button = tk.Button(candidato_window, text="Listar Vagas", command=exibir_lista_vagas)
     listar_vagas_button.pack(padx=15, pady=15)
 
     # Botão - Fechar a janela do candidato
@@ -213,17 +213,18 @@ def abrir_interface_recrutador():
     criar_perfil_button = tk.Button(recrutador_window, text="Criar Perfil de Recrutador", command=criar_perfil_recrutador)
     criar_perfil_button.pack(padx=15, pady=15)
 
-    # Botão - Fechar a janela do recrutador
+# Botão - Listar vagas
+    listar_vagas_button = tk.Button(recrutador_window, text="Listar Vagas", command=exibir_lista_vagas)
+    listar_vagas_button.pack(padx=15, pady=15)
+
+     # Botão - Fechar a janela do recrutador
     fechar_button = tk.Button(recrutador_window, text="Fechar", command=recrutador_window.destroy)
     fechar_button.pack(padx=15, pady=15)
 
     # Botão - Listar candidatos
-    listar_candidatos_button = tk.Button(candidato_window, text="Listar Candidatos", command=exibir_lista_candidatos)
+    listar_candidatos_button = tk.Button(recrutador_window, text="Listar Candidatos", command=exibir_lista_candidatos)
     listar_candidatos_button.pack(padx=15, pady=15)
 
-    # Botão - Listar vagas
-    listar_vagas_button = tk.Button(recrutador_window, text="Listar Vagas", command=exibir_lista_vagas)
-    listar_vagas_button.pack(padx=15, pady=15)
 
 # Funçao - Abrir a interface de vagas
 def abrir_interface_vagas():
