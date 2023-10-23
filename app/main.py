@@ -8,7 +8,7 @@ import re
 conn = sqlite3.connect('recrutamento.db')
 cursor = conn.cursor()
 
-# Funções para criar tabelas no banco de dados
+# Criar tabelas no banco de dados
 def criar_tabela_candidato():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS Candidato (
@@ -45,28 +45,28 @@ def criar_tabela_vagas():
     ''')
     conn.commit()
 
-# Função para adicionar um candidato ao banco de dados
+# Adicionar um candidato ao banco de dados
 def adicionar_candidato(nome, email, experiencia, curriculo):
     cursor.execute('INSERT INTO Candidato (Nome, E_mail, Experiencia, Curriculo) VALUES (?, ?, ?, ?)',
                    (nome, email, experiencia, curriculo))
     conn.commit()
     return cursor.lastrowid
 
-# Função para adicionar um recrutador ao banco de dados
+# Adicionar um recrutador ao banco de dados
 def adicionar_recrutador(nome, empresa, contato):
     cursor.execute('INSERT INTO Recrutador (Nome, Empresa, Contato) VALUES (?, ?, ?)',
                    (nome, empresa, contato))
     conn.commit()
     return cursor.lastrowid
 
-# Função para adicionar uma vaga ao banco de dados
+# Adicionar uma vaga ao banco de dados
 def adicionar_vaga(titulo, descricao, empresa, salario, requisitos):
     cursor.execute('INSERT INTO Vagas (Titulo, Descricao, Empresa, Salario, Requisitos) VALUES (?, ?, ?, ?, ?)',
                    (titulo, descricao, empresa, salario, requisitos))
     conn.commit()
     return cursor.lastrowid
 
-# Função para fazer upload de um currículo em PDF
+# Fazer upload de um currículo em PDF
 def fazer_upload_curriculo():
     file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
     if file_path:
@@ -74,7 +74,7 @@ def fazer_upload_curriculo():
             return file.read()
     return None
 
-# Função para criar o perfil do candidato
+# Criar o perfil do candidato
 def criar_perfil_candidato():
     nome = nome_entry.get()
     email = email_entry.get()
@@ -87,7 +87,7 @@ def criar_perfil_candidato():
     else:
         messagebox.showerror("Erro", "Preencha todos os campos e faça upload do currículo em PDF")
 
-# Função para criar o perfil do recrutador
+# Criar o perfil do recrutador
 def criar_perfil_recrutador():
     nome = nome_entry.get()
     empresa = empresa_entry.get()
@@ -99,7 +99,7 @@ def criar_perfil_recrutador():
     else:
         messagebox.showerror("Erro", "Preencha todos os campos")
 
-# Função para criar uma vaga
+# Criar uma vaga
 def criar_vaga():
     titulo = titulo_entry.get()
     descricao = descricao_text.get("1.0", "end")
@@ -118,39 +118,39 @@ def criar_vaga():
     else:
         messagebox.showerror("Erro", "Preencha todos os campos corretamente")
 
-# Função para listar candidatos do banco de dados
+# Listar candidatos do banco de dados
 def listar_candidatos():
     cursor.execute("SELECT ID_cand, Nome FROM Candidato")
     candidatos = cursor.fetchall()
     return candidatos
 
-# Função para listar vagas do banco de dados
+# Listar vagas do banco de dados
 def listar_vagas():
     cursor.execute("SELECT ID_vaga, Titulo FROM Vagas")
     vagas = cursor.fetchall()
     return vagas
 
-# Função para exibir a lista de candidatos em um Listbox
+# Exibir a lista de candidatos em um Listbox
 def exibir_lista_candidatos():
     candidatos = listar_candidatos()
     listbox.delete(0, tk.END)  # Limpa a lista existente
     for candidato in candidatos:
         listbox.insert(tk.END, f"{candidato[0]} - {candidato[1]}")
 
-# Função para exibir a lista de vagas em um Listbox
+# Exibir a lista de vagas em um Listbox
 def exibir_lista_vagas():
     vagas = listar_vagas()
     listbox.delete(0, tk.END)  # Limpa a lista existente
     for vaga in vagas:
         listbox.insert(tk.END, f"{vaga[0]} - {vaga[1]}")
 
-# Funçao para validar email
+# Validar email
 def validar_email(email):
     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
         return False
     return True
 
-# Função para abrir a interface do candidato
+# Abrir a interface do candidato
 def abrir_interface_candidato():
     candidato_window = tk.Toplevel(root)
     candidato_window.title("DEVConnect - Candidato")
@@ -175,19 +175,20 @@ def abrir_interface_candidato():
     upload_button = tk.Button(candidato_window, text="Fazer Upload de Currículo (PDF)", command=fazer_upload_curriculo)
     upload_button.pack()
 
-        # Botão para criar o perfil do candidato
+    # Botão para criar o perfil do candidato
     criar_perfil_button = tk.Button(candidato_window, text="Criar Perfil de Candidato", command=criar_perfil_candidato)
     criar_perfil_button.pack()
+
+    # Botão para listar vagas
+    listar_vagas_button = tk.Button(recrutador_window, text="Listar Vagas", command=exibir_lista_vagas)
+    listar_vagas_button.pack()
 
     # Botão para fechar a janela do candidato
     fechar_button = tk.Button(candidato_window, text="Fechar", command=candidato_window.destroy)
     fechar_button.pack()
 
-    # Botão para listar candidatos
-    listar_candidatos_button = tk.Button(candidato_window, text="Listar Candidatos", command=exibir_lista_candidatos)
-    listar_candidatos_button.pack()
 
-# Função para abrir a interface do recrutador
+# Abrir a interface do recrutador
 def abrir_interface_recrutador():
     recrutador_window = tk.Toplevel(root)
     recrutador_window.title("DEVConnect - Recrutador")
@@ -216,11 +217,15 @@ def abrir_interface_recrutador():
     fechar_button = tk.Button(recrutador_window, text="Fechar", command=recrutador_window.destroy)
     fechar_button.pack()
 
+    # Botão para listar candidatos
+    listar_candidatos_button = tk.Button(candidato_window, text="Listar Candidatos", command=exibir_lista_candidatos)
+    listar_candidatos_button.pack()
+
     # Botão para listar vagas
     listar_vagas_button = tk.Button(recrutador_window, text="Listar Vagas", command=exibir_lista_vagas)
     listar_vagas_button.pack()
 
-# Função para abrir a interface de vagas
+# Abrir a interface de vagas
 def abrir_interface_vagas():
     vagas_window = tk.Toplevel(root)
     vagas_window.title("DEVConnect - Vagas")
@@ -268,15 +273,15 @@ def abrir_interface_vagas():
     listbox = tk.Listbox(vagas_window, selectmode=tk.SINGLE, width=60, height=15)
     listbox.pack()
 
-# Função para fechar a janela do candidato
+# Fechar a janela do candidato
 def fechar_janela_candidato():
     candidato_window.destroy()
 
-# Função para fechar a janela de vagas
+# Fechar a janela de vagas
 def fechar_janela_vagas():
     vagas_window.destroy()
 
-# Função para listar candidatos no Listbox
+# Listar candidatos no Listbox
 def exibir_lista_candidatos():
     candidato_window = tk.Toplevel(root)
     candidato_window.title("Lista de Candidatos")
@@ -289,7 +294,7 @@ def exibir_lista_candidatos():
     for candidato in candidatos:
         listbox.insert(tk.END, f"{candidato[0]} - {candidato[1]}")
 
-# Função para listar vagas no Listbox
+# Listar vagas no Listbox
 def exibir_lista_vagas():
     vagas_window = tk.Toplevel(root)
     vagas_window.title("Lista de Vagas")
