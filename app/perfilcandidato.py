@@ -1,6 +1,6 @@
 import tkinter as tk
 
-# ... (seu código existente) ...
+# ... (código) ...
 
 # Função para exibir detalhes do candidato
 def exibir_detalhes_candidato():
@@ -20,10 +20,10 @@ def exibir_detalhes_candidato():
     tk.Label(detalhes_window, text=f"E-mail: {candidato_detalhes['E_mail']}").pack()
     tk.Label(detalhes_window, text=f"Experiência: {candidato_detalhes['Experiencia']}").pack()
 
-# ... (seu código existente) ...
+# ... (código) ...
 
 # Botão para exibir detalhes do candidato
 exibir_detalhes_button = tk.Button(candidato_window, text="Exibir Detalhes do Candidato", command=exibir_detalhes_candidato)
 exibir_detalhes_button.pack()
 
-# ... (seu código existente) ...
+# ... (código) ...
